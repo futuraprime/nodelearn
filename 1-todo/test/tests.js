@@ -8,10 +8,10 @@
 
   request = require('request');
 
-  suite = vows.describe('Blegh');
+  suite = vows.describe('Todos');
 
   suite.addBatch({
-    'The Blegh': {
+    'Todos': {
       'when running': {
         topic: function() {
           request({
