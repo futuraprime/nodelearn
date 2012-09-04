@@ -1,5 +1,6 @@
 flatiron = require 'flatiron'
 path = require 'path'
+data = require './data.js'
 app = flatiron.app
 
 app.config.file
