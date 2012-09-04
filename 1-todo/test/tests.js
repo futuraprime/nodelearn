@@ -26,19 +26,23 @@
       },
       'data model': {
         'tasks': {
-          'valid task': {
-            topic: function() {
-              return data.Task.create({
-                'name': 'Foo',
-                'completed': false
-              }, this.callback);
-            },
-            "should be a Task": function(topic) {
-              return assert.ok(topic instanceof data.Task);
-            },
-            "should be named Foo": function(topic) {
-              return assert.equal(topic.name, 'Foo');
-            }
+          topic: function() {
+            return data.Task.create({
+              'name': 'Foo',
+              'completed': false
+            }, this.callback);
+          },
+          "should be a Task": function(topic) {
+            return assert.ok(topic instanceof data.Task);
+          },
+          "should be named Foo": function(topic) {
+            return assert.equal(topic.name, 'Foo');
+          },
+          "should be possible to set completed": function(topic) {
+            assert.doesNotThrow(function() {
+              return topic.completed = true;
+            });
+            return assert.ok(topic.completed);
           }
         }
       }

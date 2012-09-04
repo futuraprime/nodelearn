@@ -18,15 +18,18 @@ suite.addBatch
 				assert.equal res.statusCode, 200
 		'data model' :
 			'tasks' :
-				'valid task' :
-					topic : ->
-						data.Task.create
-							'name' : 'Foo'
-							'completed' : false
-						, this.callback
-					"should be a Task" : (topic) ->
-						assert.ok topic instanceof data.Task
-					"should be named Foo" : (topic) ->
-						assert.equal topic.name, 'Foo'
+				topic : ->
+					data.Task.create
+						'name' : 'Foo'
+						'completed' : false
+					, this.callback
+				"should be a Task" : (topic) ->
+					assert.ok topic instanceof data.Task
+				"should be named Foo" : (topic) ->
+					assert.equal topic.name, 'Foo'
+				"should be possible to set completed" : (topic) ->
+					assert.doesNotThrow -> topic.completed = true
+					assert.ok topic.completed
+		
 
 suite.run()
