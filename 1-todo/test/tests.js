@@ -14,6 +14,47 @@
 
   suite.addBatch({
     'Todos': {
+      'data model': {
+        'tasks': {
+          'single task': {
+            topic: function() {
+              return data.Task.create({
+                'name': 'Foo',
+                'completed': false
+              }, this.callback);
+            },
+            "should be a Task": function(topic) {
+              return assert.ok(topic instanceof data.Task);
+            },
+            "should be named Foo": function(topic) {
+              return assert.equal(topic.name, 'Foo');
+            },
+            "should be possible to set completed": function(topic) {
+              assert.doesNotThrow(function() {
+                return topic.completed = true;
+              });
+              return assert.ok(topic.completed);
+            }
+          },
+          'task collection': {
+            topic: function() {
+              var samples, x, _i, _len;
+              samples = ['foo', 'bar', 'baz'];
+              for (_i = 0, _len = samples.length; _i < _len; _i++) {
+                x = samples[_i];
+                data.Task.create({
+                  'name': x
+                });
+              }
+              return data.Task.get('foo', this.callback);
+            },
+            "should have multiple tasks": function(err, result) {
+              console.log("logga", err, result, data.Task.get);
+              return assert.equal(0, 1);
+            }
+          }
+        }
+      },
       'http server': {
         topic: function() {
           request({
@@ -22,28 +63,6 @@
         },
         "should respond with status of 200": function(e, res, body) {
           return assert.equal(res.statusCode, 200);
-        }
-      },
-      'data model': {
-        'tasks': {
-          topic: function() {
-            return data.Task.create({
-              'name': 'Foo',
-              'completed': false
-            }, this.callback);
-          },
-          "should be a Task": function(topic) {
-            return assert.ok(topic instanceof data.Task);
-          },
-          "should be named Foo": function(topic) {
-            return assert.equal(topic.name, 'Foo');
-          },
-          "should be possible to set completed": function(topic) {
-            assert.doesNotThrow(function() {
-              return topic.completed = true;
-            });
-            return assert.ok(topic.completed);
-          }
         }
       }
     }
